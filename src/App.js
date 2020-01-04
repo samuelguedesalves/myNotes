@@ -12,11 +12,15 @@ class App extends Component {
     this.state = {
       email_handler: "",
       password_handler: "",
+      username_handler: "",
       login_error: false,
+      login_window: true,
     }
 
     this.handlerInput = this.handlerInput.bind(this);
     this.appLogin = this.appLogin.bind(this);
+    this.alterWindow = this.alterWindow.bind(this);
+    this.createAccount = this.createAccount.bind(this);
   }
 
   handlerInput(e){
@@ -25,6 +29,10 @@ class App extends Component {
     }else{
       if(e.target.name === "password"){
         this.setState({ password_handler: e.target.value });
+      }else{
+        if(e.target.name === "username"){
+          this.setState({ username_handler: e.target.value });
+        }
       }
     }
   }
@@ -47,6 +55,34 @@ class App extends Component {
     })
   }
 
+  alterWindow(e){
+    console.log(e.target.name);
+    if(e.target.name === "bt_login"){
+      this.setState({login_window: false, email_handler: "", password_handler: "", username_handler: "" });
+    }else{
+      if(e.target.name === "bt_create_account"){
+        this.setState({login_window: true, email_handler: "", password_handler: "", username_handler: "" });
+      }
+    }
+  }
+
+  createAccount(){
+    axios.post('https://api-carrot.herokuapp.com/new_user', {
+      name_user: this.state.username_handler,
+      email_user: this.state.email_handler,
+      password_user: this.state.password_handler,
+    }).then((api_response)=>{
+      //console.log(api_response.data);
+      if(api_response.data.insert === true){
+        //direcionar para o app
+      }else{
+        //apresenta mensagem de erro
+      }
+    }).catch((api_error)=>{
+      console.error(api_error);
+    })
+  }
+
   render(){
     return (
       <div className="App">
@@ -57,13 +93,13 @@ class App extends Component {
           </div>
           
           <div className="form-container" >
-          
+            {this.state.login_window? 
             <div className="form_login container" >
 
                 {this.state.login_error? 
                   
                   <div className="alert alert-danger" role="alert">
-                    <strong>Login Erro!</strong> Your email or password is wrong!
+                    <strong> <i className="fas fa-exclamation-triangle mr-1"></i> Login Erro!</strong> Your email or password is wrong!
                   </div>
                   : <div></div>
                 }
@@ -72,15 +108,34 @@ class App extends Component {
                 <h2 className="mb-5" >Login</h2>
                 <div className="form-group">
                     <h5 >Email <i className="fas fa-envelope ml-2"></i> </h5>
-                    <input type="email" name="email" className="form-control" onChange={this.handlerInput} />
+                    <input type="email" name="email" className="form-control" value={this.state.email_handler} onChange={this.handlerInput} />
                 </div>
                 <div className="form-group">
                     <h5 >Password <i className="fas fa-key ml-2"></i> </h5>
-                    <input type="password" name="password" className="form-control" onChange={this.handlerInput} />
+                    <input type="password" name="password" className="form-control" value={this.state.password_handler}  onChange={this.handlerInput} />
                 </div>
                 <button className="btn btn-primary container" onClick={this.appLogin} >Login <i className="fas fa-door-open ml-2"></i> </button>
-                <h6  className="mt-3">You dont hava a acount? Let's make.</h6>
+                <h6  className="mt-3">You dont have a acount? <button name="bt_login" onClick={this.alterWindow} className="btn text-warning btn-link">Let's make.</button> </h6>
             </div>
+            :
+            <div className="form_create_acount container">
+              <h2 className="mb-5">Create a account</h2>
+              <div className="form-group" >
+                <h5>Username</h5>
+                <input name="username" type="text" className="form-control" value={this.state.username_handler} onChange={this.handlerInput} />
+              </div>
+              <div className="form-group" >
+                <h5>Email</h5>
+                <input name="email" type="email" className="form-control" value={this.state.email_handler} onChange={this.handlerInput}/>
+              </div>
+              <div className="form-group" >
+                <h5>Password</h5>
+                <input name="password" type="password" className="form-control" value={this.state.password_handler} onChange={this.handlerInput} />
+              </div>
+              <button className="btn btn-primary container" onClick={this.createAccount} >Create Account <i className="fas fa-arrow-alt-circle-right"></i> </button>
+              <h6  className="mt-3">You have a acount? <button name="bt_create_account" onClick={this.alterWindow} className="btn text-warning btn-link">Let's Login.</button> </h6>
+            </div>
+            }
   
           </div>
   
