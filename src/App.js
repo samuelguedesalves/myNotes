@@ -15,6 +15,7 @@ class App extends Component {
       username_handler: "",
       login_error: false,
       login_window: true,
+      create_account_error: false,
     }
 
     this.handlerInput = this.handlerInput.bind(this);
@@ -58,7 +59,7 @@ class App extends Component {
   alterWindow(e){
     console.log(e.target.name);
     if(e.target.name === "bt_login"){
-      this.setState({login_window: false, email_handler: "", password_handler: "", username_handler: "" });
+      this.setState({login_window: false, login_error: false, create_account_error: false,email_handler: "", password_handler: "", username_handler: "" });
     }else{
       if(e.target.name === "bt_create_account"){
         this.setState({login_window: true, email_handler: "", password_handler: "", username_handler: "" });
@@ -72,11 +73,11 @@ class App extends Component {
       email_user: this.state.email_handler,
       password_user: this.state.password_handler,
     }).then((api_response)=>{
-      //console.log(api_response.data);
+      console.log(api_response.data);
       if(api_response.data.insert === true){
         //direcionar para o app
       }else{
-        //apresenta mensagem de erro
+        this.setState({create_account_error: true});
       }
     }).catch((api_error)=>{
       console.error(api_error);
@@ -119,17 +120,24 @@ class App extends Component {
             </div>
             :
             <div className="form_create_acount container">
+              {this.state.create_account_error?
+                <div className="alert alert-danger" role="alert">
+                  <strong> <i className="fas fa-exclamation-triangle mr-1"></i> Create Erro!</strong> Your email or password is wrong!
+                </div>
+              :
+                <div></div>
+              }
               <h2 className="mb-5">Create a account</h2>
               <div className="form-group" >
-                <h5>Username</h5>
+                <h5>Username <i className="fas fa-user ml-2"></i> </h5>
                 <input name="username" type="text" className="form-control" value={this.state.username_handler} onChange={this.handlerInput} />
               </div>
               <div className="form-group" >
-                <h5>Email</h5>
+                <h5>Email <i className="fas fa-envelope ml-2"></i> </h5>
                 <input name="email" type="email" className="form-control" value={this.state.email_handler} onChange={this.handlerInput}/>
               </div>
               <div className="form-group" >
-                <h5>Password</h5>
+                <h5>Password <i className="fas fa-key ml-2"></i> </h5>
                 <input name="password" type="password" className="form-control" value={this.state.password_handler} onChange={this.handlerInput} />
               </div>
               <button className="btn btn-primary container" onClick={this.createAccount} >Create Account <i className="fas fa-arrow-alt-circle-right"></i> </button>
