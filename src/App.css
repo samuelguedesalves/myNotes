@@ -1,9 +1,8 @@
 .App {
-  display: flex;
-  background-color: #2AE453;
+  background-color: #712AE4;
   min-height: 100vh;
-  flex-direction: row;
-  justify-content: center;
+  /* flex-direction: row;
+  justify-content: center; */
   /* 
   align-items: center;
   */
@@ -11,56 +10,22 @@
   color: white;
 }
 
-.app-body{
-  width: 50vh;
-}
-
-.App-header {
-  padding-top: 2vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.logo-app{
-  width: 200px;
-}
-
-.center-div{
-  height: 70vh;
+.form-container{
+  height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.login-form{
+.form_login{
+  max-width: 500px;
+}
+
+.app-header{
+  padding-top: 20px ;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  flex-wrap: wrap;
-}
-
-.inputs-form input{
-  width: 100%;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  padding: 1vh 3vh;
-
-  margin-bottom: 2vh;
-}
-
-.button-login{
-  width: 100%;
-  padding: 1vh;
-  border-radius: 5px;
-  border: none;
-  background-color: #4578F9;
-  color: #ffffff;
-}
-
-.link-create{
-  color: #FFF065;
 }
 
 
@@ -68,6 +33,8 @@
 
 
 
+
+/*
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -79,7 +46,6 @@
   }
 }
 
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -88,3 +54,4 @@
     transform: rotate(360deg);
   }
 }
+*/
