@@ -28,7 +28,7 @@ class Body extends Component {
                             <h4>Notes</h4>
                             
                             <div className="note_list">
-                                <button type="button" class="btn btn-success container mb-3">New Note <i className="fas fa-plus-circle ml-2"></i></button>
+                                <button type="button" className="btn btn-success container mb-3">New Note <i className="fas fa-plus-circle ml-2"></i></button>
 
                                 <Note text_note="olá mundo" />
     
