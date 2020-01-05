@@ -1,7 +1,7 @@
 import React , { Component } from 'react';
 import axios from 'axios';
 //import logo from './logo.svg';
-import logo from './assets/logo_check_task.svg';
+import logo from '../../assets/logo_check_task.svg';
 import './App.css';
 
 
@@ -47,7 +47,8 @@ class App extends Component {
         this.setState({login_error: true});
       }else{
         this.setState({login_error: false});
-        localStorage.setItem("check_task_token", api_response.data.token)
+        localStorage.setItem("check_task_token", api_response.data.token);
+        this.props.history.push('/dashboard');
       }
       //console.log(api_response.data);
 
@@ -57,7 +58,7 @@ class App extends Component {
   }
 
   alterWindow(e){
-    console.log(e.target.name);
+    //console.log(e.target.name);
     if(e.target.name === "bt_login"){
       this.setState({login_window: false, login_error: false, create_account_error: false,email_handler: "", password_handler: "", username_handler: "" });
     }else{
