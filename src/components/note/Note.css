@@ -5,4 +5,12 @@
     border-radius: 5px;
     padding: 10px ;
     font-weight: bold;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card_text{
+    margin: 0;
 }
