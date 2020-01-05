@@ -1,0 +1,23 @@
+.app_container{
+    background-color: #712AE4;
+    min-height: 100vh;
+    color: #ffffff;
+}
+.middler_container{
+    max-width: 500px;
+}
+.header_container{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.task_list{
+    margin-top: 15px;
+    padding: 15px;
+    height: 85vh;
+    background-color: #6025be;
+    border-radius: 10px;
+}
+

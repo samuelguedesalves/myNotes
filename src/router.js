@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import App from "./components/login/App";
+import Body from "./components/body/Body";
 
 class RouterApp extends Component {
     render() {
@@ -9,7 +10,7 @@ class RouterApp extends Component {
             <Router>
                 <Switch>
                     <Route exact path="/" component={App} />
-                    <Route exact path="/dashboard" component={() => (<div>Not exist</div>)} />
+                    <Route exact path="/dashboard" component={Body} />
                     <Route path="/" component={PageErro} />
                 </Switch>
             </Router>
