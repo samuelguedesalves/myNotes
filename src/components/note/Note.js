@@ -5,16 +5,18 @@ class Note extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            text: this.props.text_note
-        }
+        this.alterText = this.alterText.bind(this);
+    }
+
+    alterText(){
+        this.props.edit_note(this.props.index);
     }
 
     render() {
         return (
-            <div onClick={this.props.edit_note} className="card_container">
+            <div onClick={this.alterText} className="card_container">
                 <p className="card_text">
-                    {this.state.text}
+                    {this.props.text_note}
                 </p>
             </div>
         );

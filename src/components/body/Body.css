@@ -22,7 +22,6 @@
 }
 
 .modal_note{
-    display: none;
     position: fixed;
     width: 100%;
     height: 100vh;
@@ -51,4 +50,8 @@
     border-radius: 5px;
     outline: none;
     resize: none;
+}
+
+.button_save{
+    width: 100%;
 }
