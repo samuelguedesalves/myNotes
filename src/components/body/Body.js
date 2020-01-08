@@ -14,11 +14,43 @@ class Body extends Component {
         this.state = {
             user_token: "",
             textEdit: "",
+            selectedNote: null,
             activeModal: false,
             tasks: [],
         }
 
         this.editNote = this.editNote.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.saveNote = this.saveNote.bind(this);
+        this.alterTextEdit = this.alterTextEdit.bind(this);
+    }
+
+    
+    componentDidMount(){
+        axios.post("https://api-carrot.herokuapp.com/my_task", {
+            user_token: localStorage.getItem("check_task_token")
+        }).then((api_response) => {
+            this.setState({ tasks: api_response.data });
+            console.log(api_response.data);
+        }).catch((err)=>{
+            console.error(err);
+        });
+    }
+
+    closeModal(){
+        this.setState({ textEdit: ""  ,activeModal: false});
+    }
+
+    editNote(index_note){
+        this.setState({ textEdit: this.state.tasks[index_note].task_note, selectedNote:index_note, activeModal: true});
+    }
+
+    saveNote(e){
+        console.log(this.state.textEdit);
+        console.log(e.target.value);
+    }
+    
+    alterTextEdit(e){
         this.closeModal = this.closeModal.bind(this);
     }
 
@@ -39,8 +71,24 @@ class Body extends Component {
     }
 
     editNote(index_note){
-        this.setState({ textEdit: this.state.tasks[index_note].task_note  ,activeModal: true});
+        this.setState({ textEdit: this.state.tasks[index_note].task_note, selectedNote:index_note, activeModal: true});
     }
+
+    saveNote(e){
+        console.log(this.state.textEdit);
+        console.log(e.target.value);
+        //var indexNote = e.target.value;
+        //var indexNote = this.state.tasks[e.target.value];
+        //this.setState({ (tasks[e.target.value]) : this.state.textEdit });
+
+        //É NECESSARIO ARRUMAR ESTÁ FUNÇÃO
+    }
+    
+    alterTextEdit(e){
+        this.setState({textEdit: e.target.value});
+        //console.log(e.target.value);
+    }
+
 
     render() {
         if(localStorage.getItem("check_task_token") != null ){
@@ -52,8 +100,8 @@ class Body extends Component {
                             <div className="modal_content">
                                 <span onClick={this.closeModal} className="close_modal"><i className="fas fa-times-circle"></i></span>
                                 <h3>Modal Title</h3>
-                                <textarea className="text_area_modal" >{this.state.textEdit}</textarea>
-                                <button type="button" className="btn btn-primary button_save">Save Note</button>
+                                <textarea value={this.state.textEdit} onChange={this.alterTextEdit} className="text_area_modal"/>
+                                <button onClick={this.saveNote} value={this.state.selectedNote} type="button" className="btn btn-primary button_save">Save Note</button>
                             </div>
                         </div>
                     :
