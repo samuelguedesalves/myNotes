@@ -1,5 +1,5 @@
 .app_container{
-    background-color: #712AE4;
+    background-color: #167ee6;
     min-height: 100vh;
     color: #ffffff;
 }
@@ -13,12 +13,29 @@
     justify-content: center;
 }
 
+.note_list{
+    border: none;
+    border-top: 3px solid #eee;
+    padding-top: 10px;
+}
+
 .task_list{
     margin-top: 15px;
     padding: 15px;
     height: 85vh;
-    background-color: #6025be;
+    background-color: #fff;
     border-radius: 10px;
+    color: #167ee6;
+}
+
+#buttonNewNote{
+    border: none;
+    background-color: #56DF8D;
+    font-weight: bold;
+}
+
+#buttonNewNote:hover{
+    background-color: #4bbe79;
 }
 
 .modal_note{
@@ -37,15 +54,17 @@
     padding: 10px;
     border-radius: 5px;
 }
-.close_modal{
+#spanCloseModal{
     font-size: 28px;
     float: right;
+    display: flex;
+    align-items: center;
 }
 .text_area_modal{
     width: 100%;
     height: 70vh;
     padding: 10px;
-    background-color: rgb(222, 202, 255);
+    background-color: #eee;
     border: none;
     border-radius: 5px;
     outline: none;
@@ -54,5 +73,11 @@
 }
 
 .button_save{
+    border: none;
     width: 100%;
+    background-color: #56DF8D;
+    font-weight: bold;
+}
+.button_save:hover{
+    background-color: #4bbe79;
 }

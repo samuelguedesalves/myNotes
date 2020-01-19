@@ -1,8 +1,10 @@
 import React , { Component } from 'react';
-import axios from 'axios';
-//import logo from './logo.svg';
-import logo from '../../assets/logo_check_task.svg';
+import logo from '../../assets/MyNotes_logo.svg';
 import './App.css';
+
+import api from '../../services/api';
+
+import * as Icon from 'react-feather';
 
 
 class App extends Component {
@@ -13,6 +15,7 @@ class App extends Component {
       email_handler: "",
       password_handler: "",
       username_handler: "",
+
       login_error: false,
       login_window: true,
       create_account_error: false,
@@ -39,24 +42,21 @@ class App extends Component {
     }
   }
 
-  appLogin(){
+  async appLogin(){
     this.setState({requestApi: true});
-    axios.post('https://api-carrot.herokuapp.com/login', {
-      user_email: this.state.email_handler,
-      user_password: this.state.password_handler,
-    }).then((api_response) => {
-      if(api_response.data.log === false){
-        this.setState({login_error: true, requestApi: false});
-      }else{
-        this.setState({login_error: false});
-        localStorage.setItem("check_task_token", api_response.data.token);
-        this.props.history.push('/dashboard');
-      }
-      //console.log(api_response.data);
 
-    }).catch((error) => {
-      console.error(error);
-    })
+    const response = await api.post('/auth/authenticate', {
+      email: this.state.email_handler,
+      password: this.state.password_handler,
+    });
+
+    if(!response){
+      this.setState({login_error: true, requestApi: false});
+    }else{
+      localStorage.setItem("token", response.data.token);
+      this.props.history.push('/dashboard');
+    }
+
   }
 
   alterWindow(e){
@@ -70,8 +70,22 @@ class App extends Component {
     }
   }
 
-  createAccount(){
+  async createAccount(){
     this.setState({requestApi: true});
+
+    const response = await api.post('/auth/register',{
+      name: this.state.username_handler,
+      email: this.state.email_handler,
+      password: this.state.password_handler
+    });
+
+    if( !response ){
+      this.setState({ requestApi: false, create_account_error: true });
+    }else{
+      localStorage.setItem("token", response.data.token);
+      this.props.history.push("/dashboard");
+    }
+    /*
     axios.post('https://api-carrot.herokuapp.com/new_user', {
       name_user: this.state.username_handler,
       email_user: this.state.email_handler,
@@ -89,6 +103,7 @@ class App extends Component {
     }).catch((api_error)=>{
       console.error(api_error);
     })
+    */
   }
 
   render(){
@@ -97,7 +112,7 @@ class App extends Component {
         <div className="container" >
   
           <div className="app-header">
-            <img className="logo-app" width="200px" src={logo} alt="Check Task" />
+            <img className="logo-app" width="180px" src={logo} alt="Check Task" />
           </div>
           {this.state.requestApi?
             <div className="loanding_container" >
@@ -119,17 +134,19 @@ class App extends Component {
                   }
 
 
-                  <h2 className="mb-5" >Login</h2>
+                  <h2 className="mb-5" > <strong>Login</strong> </h2>
                   <div className="form-group">
-                      <h5 >Email <i className="fas fa-envelope ml-2"></i> </h5>
+                      <h5 >Email <Icon.Mail/> </h5>
                       <input type="email" name="email" className="form-control" value={this.state.email_handler} onChange={this.handlerInput} />
                   </div>
                   <div className="form-group">
-                      <h5 >Password <i className="fas fa-key ml-2"></i> </h5>
+                      <h5 >Password <Icon.Key/> </h5>
                       <input type="password" name="password" className="form-control" value={this.state.password_handler}  onChange={this.handlerInput} />
                   </div>
-                  <button className="btn btn-primary container" onClick={this.appLogin} >Login <i className="fas fa-door-open ml-2"></i> </button>
+                  <button id='button_login' className="btn btn-primary container" onClick={this.appLogin} >Login <Icon.LogIn/> </button>
+                  
                   <h6  className="mt-3">You dont have a acount? <button name="bt_login" onClick={this.alterWindow} className="btn text-warning btn-link">Let's make.</button> </h6>
+                  
               </div>
               :
               <div className="form_create_acount container">
@@ -140,20 +157,20 @@ class App extends Component {
                 :
                   <div></div>
                 }
-                <h2 className="mb-5">Create a account</h2>
+                <h2 className="mb-5"> <strong>Create a account</strong> </h2>
                 <div className="form-group" >
-                  <h5>Username <i className="fas fa-user ml-2"></i> </h5>
+                  <h5>Username <Icon.User/> </h5>
                   <input name="username" type="text" className="form-control" value={this.state.username_handler} onChange={this.handlerInput} />
                 </div>
                 <div className="form-group" >
-                  <h5>Email <i className="fas fa-envelope ml-2"></i> </h5>
+                  <h5>Email <Icon.Mail/> </h5>
                   <input name="email" type="email" className="form-control" value={this.state.email_handler} onChange={this.handlerInput}/>
                 </div>
                 <div className="form-group" >
-                  <h5>Password <i className="fas fa-key ml-2"></i> </h5>
+                  <h5>Password <Icon.Key/> </h5>
                   <input name="password" type="password" className="form-control" value={this.state.password_handler} onChange={this.handlerInput} />
                 </div>
-                <button className="btn btn-primary container" onClick={this.createAccount} >Create Account <i className="fas fa-arrow-alt-circle-right"></i> </button>
+                <button id='button_create_account' className="btn btn-primary container" onClick={this.createAccount} >Create Account <Icon.ArrowRightCircle/> </button>
                 <h6  className="mt-3">You have a acount? <button name="bt_create_account" onClick={this.alterWindow} className="btn text-warning btn-link">Let's Login.</button> </h6>
               </div>
               }

@@ -1,17 +1,14 @@
 .App {
-  background-color: #712AE4;
+  background-color: #167ee6;
   min-height: 100vh;
-  /* flex-direction: row;
-  justify-content: center; */
-  /* 
-  align-items: center;
-  */
   font-size: calc(6px + 2vmin);
   color: white;
 }
 
+
+
 .form-container{
-  height: 600px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,6 +16,24 @@
 
 .form_login{
   max-width: 500px;
+}
+
+.form_login input{
+  border: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-weight: bold;
+}
+
+.form_login input:enabled{
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+#button_login{
+  border: none;
+  background-color: #fff;
+  color: #167ee6;
+  font-weight: bold;
 }
 
 .app-header{
@@ -39,6 +54,25 @@
   margin-top: 50px;
 }
 
+.form_create_acount input{
+  border: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+  font-weight: bold;
+}
+
+.form_create_acount input:enabled{
+  border: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+#button_create_account{
+  border: none;
+  background-color: #fff;
+  color: #167ee6;
+  font-weight: bold;
+}
 
 
 
